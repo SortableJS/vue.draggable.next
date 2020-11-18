@@ -11,19 +11,18 @@
 [![MIT License](https://img.shields.io/github/license/SortableJS/Vue.Draggable.svg)](https://github.com/SortableJS/Vue.Draggable/blob/master/LICENSE)
 
 
-Vue component (Vue.js 2.0 and vue 3) or directive (Vue.js 1.0) allowing drag-and-drop and synchronization with view model array.
+Vue component (Vue.js 3.0) allowing drag-and-drop and synchronization with view model array.
+For Vue 2 and vue 1 version check: https://github.com/SortableJS/Vue.Draggable
 
 Based on and offering all features of [Sortable.js](https://github.com/RubaXa/Sortable)
 
 ## Demo
 
-![demo gif](https://raw.githubusercontent.com/SortableJS/Vue.Draggable/master/example.gif)
+![demo gif](https://raw.githubusercontent.com/SortableJS/vue.draggable.next/master/example.gif)
 
 ## Live Demos
 
-https://sortablejs.github.io/Vue.Draggable/
-
-https://david-desmaisons.github.io/draggable-example/
+https://sortablejs.github.io/vue.draggable.next/
 
 ## Features
 
@@ -34,18 +33,10 @@ https://david-desmaisons.github.io/draggable-example/
     * Support drag and drop between different lists
     * No jQuery dependency
 * Keeps in sync HTML and view model list
-* Compatible with Vue.js 2.0 transition-group
+* Compatible with Vue.js 3.0 transition-group
 * Cancellation support
 * Events reporting any changes when full control is needed
 * Reuse existing UI library components (such as [vuetify](https://vuetifyjs.com), [element](http://element.eleme.io/), or [vue material](https://vuematerial.io) etc...) and make them draggable using `tag` and `componentData` props
-
-## Backers
-
- <a href="https://flatlogic.com/admin-dashboards">
- <img width="190" style="margin-top: 10px;" src="https://flatlogic.com/assets/logo-d9e7751df5fddd11c911945a75b56bf72bcfe809a7f6dca0e32d7b407eacedae.svg">
- </a>
-
-Admin Dashboard Templates made with Vue, React and Angular.
 
 
 ## Donate
@@ -86,8 +77,10 @@ Use draggable component:
 
 ### Typical use:
 ``` html
-<draggable v-model="myArray" group="people" @start="drag=true" @end="drag=false">
-   <div v-for="element in myArray" :key="element.id">{{element.name}}</div>
+<draggable v-model="myArray" group="people" @start="drag=true" @end="drag=false" item-key="id">
+  <template #item="{element}">
+    <div>{{element.name}}</div>
+   </template>
 </draggable>
 ```
 .vue file:
