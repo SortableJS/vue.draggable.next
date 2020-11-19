@@ -56,8 +56,6 @@ yarn add vuedraggable
 npm i -S vuedraggable
 ```
 
-**Beware it is vuedraggable for Vue 2.0 and not vue-draggable which is for version 1.0**
-
 ### with direct link 
 ```html
 
@@ -96,38 +94,33 @@ Use draggable component:
 
 ### With `transition-group`:
 ``` html
-<draggable v-model="myArray">
-    <transition-group>
-        <div v-for="element in myArray" :key="element.id">
-            {{element.name}}
-        </div>
-    </transition-group>
+<draggable v-model="myArray" tag="transition-group" item-key="id">
+  <template #item="{element}">
+      <div> {{element.name}} </div>
+  </template>
 </draggable>
 ```
 
-Draggable component should directly wrap the draggable elements, or a `transition-component` containing the draggable elements.
-
-
 ### With footer slot:
 ``` html
-<draggable v-model="myArray" draggable=".item">
-    <div v-for="element in myArray" :key="element.id" class="item">
-        {{element.name}}
-    </div>
-    <template slot="footer">
-      <button @click="addPeople">Add</button>
-    </template>
+<draggable v-model="myArray" item-key="id">
+  <template #item="{element}">
+    <div> {{element.name}} </div>
+  </template>
+  <template #footer>
+    <button @click="addPeople">Add</button>
+  </template>
 </draggable>
 ```
 ### With header slot:
 ``` html
-<draggable v-model="myArray" draggable=".item">
-    <div v-for="element in myArray" :key="element.id" class="item">
-        {{element.name}}
-    </div>
-    <template slot="header">
-      <button @click="addPeople">Add</button>
-    </template>
+<draggable v-model="myArray" item-key="id">
+  <template #item="{element}">
+    <div> {{element.name}} </div>
+  </template>
+  <template #header>
+    <button @click="addPeople">Add</button>
+  </template>
 </draggable>
 ```
 
@@ -174,8 +167,6 @@ The main difference is that `list` prop is updated by draggable component using 
 **Do not use in conjunction with modelValue prop.**
 
 #### All sortable options
-New in version 2.19
-
 Sortable options can be set directly as vue.draggable props since version 2.19.
 
 This means that all [sortable option](https://github.com/RubaXa/Sortable#options) are valid sortable props with the notable exception of all the method starting by "on" as draggable component expose the same API via events.
@@ -259,10 +250,12 @@ Value: an object corresponding to the attributes, props and events we would pass
 
 Example (using [element UI library](http://element.eleme.io/#/en-US)):
 ```HTML
-<draggable tag="el-collapse" :list="list" :component-data="getComponentData()">
-    <el-collapse-item v-for="e in list" :title="e.title" :name="e.name" :key="e.name">
-        <div>{{e.description}}</div>
+<draggable tag="el-collapse" :list="list" :component-data="getComponentData()" item-key="name">
+  <template #item="{element}">
+    <el-collapse-item :title="element.title" :name="element.name">
+        <div>{{element.description}}</div> 
      </el-collapse-item>
+  </template>
 </draggable>
 ```
 ```javascript
@@ -320,60 +313,37 @@ Limitation: neither header or footer slot works in conjunction with transition-g
 
 #### Header
 Use the `header` slot to add none-draggable element inside the vuedraggable component.
-Important: it should be used in conjunction with draggable option to tag draggable element.
-Note that header slot will always be added before the default slot regardless its position in the template.
 Ex:
 
 ``` html
-<draggable v-model="myArray" draggable=".item">
-    <div v-for="element in myArray" :key="element.id" class="item">
-        {{element.name}}
-    </div>
-    <template slot="header">
-      <button @click="addPeople">Add</button>
-    </template>
+<draggable v-model="myArray" item-key="id">
+  <template #item="{element}">
+    <div> {{element.name}} </div>
+  </template>
+  <template #header>
+    <button @click="addPeople">Add</button>
+  </template>
 </draggable>
 ```
 
 #### Footer
 Use the `footer` slot to add none-draggable element inside the vuedraggable component.
-Important: it should be used in conjunction with draggable option to tag draggable elements.
-Note that footer slot will always be added after the default slot regardless its position in the template.
 Ex:
 
 ``` html
-<draggable v-model="myArray" draggable=".item">
-    <div v-for="element in myArray" :key="element.id" class="item">
-        {{element.name}}
-    </div>
-    <template slot="footer">
-      <button @click="addPeople">Add</button>
-    </template>
+<draggable v-model="myArray" item-key="id">
+  <template #item="{element}">
+    <div> {{element.name}} </div>
+  </template>
+  <template #footer>
+    <button @click="addPeople">Add</button>
+  </template>
 </draggable>
 ```
- ### Gotchas
- 
- - Vue.draggable children should always map the list or modelValue prop using a v-for directive
-   * You may use [header](https://github.com/SortableJS/Vue.Draggable#header) and [footer](https://github.com/SortableJS/Vue.Draggable#footer) slot to by-pass this limitation.
- 
- - Children elements inside v-for should be keyed as any element in Vue.js. Be careful to provide relevant key values in particular:
-    * typically providing array index as keys won't work as key should be linked to the items content
-    * cloned elements should provide updated keys, it is doable using the [clone props](#clone) for example
-
 
  ### Example 
-  * [Clone](https://sortablejs.github.io/Vue.Draggable/#/custom-clone)
-  * [Handle](https://sortablejs.github.io/Vue.Draggable/#/handle)
-  * [Transition](https://sortablejs.github.io/Vue.Draggable/#/transition-example-2)
-  * [Nested](https://sortablejs.github.io/Vue.Draggable/#/nested-example)
-  * [Table](https://sortablejs.github.io/Vue.Draggable/#/table-example)
- 
- ### Full demo example
-
-[draggable-example](https://github.com/David-Desmaisons/draggable-example)
-
-## For Vue.js 1.0
-
-[See here](documentation/Vue.draggable.for.ReadME.md)
-
-```
+  * [Clone](https://sortablejs.github.io/vue.draggable.next/#/custom-clone)
+  * [Handle](https://sortablejs.github.io/vue.draggable.next/#/handle)
+  * [Transition](https://sortablejs.github.io/vue.draggable.next/#/transition-example-2)
+  * [Nested](https://sortablejs.github.io/vue.draggable.next/#/nested-example)
+  * [Table](https://sortablejs.github.io/vue.draggable.next/#/table-example)
