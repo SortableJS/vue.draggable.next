@@ -1,18 +1,19 @@
 <p align="center"><img width="140"src="https://raw.githubusercontent.com/SortableJS/Vue.Draggable/master/logo.svg?sanitize=true"></p>
 <h1 align="center">Vue.Draggable</h1>
 
-[![CircleCI](https://circleci.com/gh/SortableJS/Vue.Draggable.svg?style=shield)](https://circleci.com/gh/SortableJS/Vue.Draggable)
-[![Coverage](https://codecov.io/gh/SortableJS/Vue.Draggable/branch/master/graph/badge.svg)](https://codecov.io/gh/SortableJS/Vue.Draggable)
+[![CircleCI](https://circleci.com/gh/SortableJS/vue.draggable.next.svg?style=shield)](https://circleci.com/gh/SortableJS/Vue.Draggable)
+[![Coverage](https://codecov.io/gh/SortableJS/vue.draggable.next/branch/master/graph/badge.svg)](https://codecov.io/gh/SortableJS/Vue.Draggable)
 [![codebeat badge](https://codebeat.co/badges/7a6c27c8-2d0b-47b9-af55-c2eea966e713)](https://codebeat.co/projects/github-com-sortablejs-vue-draggable-master)
-[![GitHub open issues](https://img.shields.io/github/issues/SortableJS/Vue.Draggable.svg)](https://github.com/SortableJS/Vue.Draggable/issues?q=is%3Aopen+is%3Aissue)
+[![GitHub open issues](https://img.shields.io/github/issues/SortableJS/vue.draggable.next.svg)](https://github.com/SortableJS/Vue.Draggable/issues?q=is%3Aopen+is%3Aissue)
 [![npm download](https://img.shields.io/npm/dt/vuedraggable.svg?maxAge=30)](https://www.npmjs.com/package/vuedraggable)
 [![npm download per month](https://img.shields.io/npm/dm/vuedraggable.svg)](https://www.npmjs.com/package/vuedraggable)
 [![npm version](https://img.shields.io/npm/v/vuedraggable.svg)](https://www.npmjs.com/package/vuedraggable)
-[![MIT License](https://img.shields.io/github/license/SortableJS/Vue.Draggable.svg)](https://github.com/SortableJS/Vue.Draggable/blob/master/LICENSE)
+[![MIT License](https://img.shields.io/github/license/SortableJS/vue.draggable.next.svg)](https://github.com/SortableJS/Vue.Draggable/blob/master/LICENSE)
 
 
 Vue component (Vue.js 3.0) allowing drag-and-drop and synchronization with view model array.
-For Vue 2 and vue 1 version check: https://github.com/SortableJS/Vue.Draggable
+
+For Vue 2 and Vue 1 version check: https://github.com/SortableJS/Vue.Draggable
 
 Based on and offering all features of [Sortable.js](https://github.com/RubaXa/Sortable)
 
@@ -51,37 +52,38 @@ Find this project useful? You can buy me a :coffee: or a :beer:
 ### With npm or yarn 
 
 ```bash
-yarn add vuedraggable
+yarn add vuedraggable@next
 
-npm i -S vuedraggable
+npm i -S vuedraggable@next
 ```
 
 ### with direct link 
 ```html
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/vue/3.0.2/vue.min.js"></script>
 <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
-<script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
 <!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/4.0.0/vuedraggable.umd.min.js"></script>
 
 ```
 
 [cf example section](https://github.com/SortableJS/Vue.Draggable/tree/master/example)
 
-## For Vue.js 2.0
 
-Use draggable component:
-
-### Typical use:
+## Typical use:
 ``` html
-<draggable v-model="myArray" group="people" @start="drag=true" @end="drag=false" item-key="id">
+<draggable 
+  v-model="myArray" 
+  group="people" 
+  @start="drag=true" 
+  @end="drag=false" 
+  item-key="id">
   <template #item="{element}">
     <div>{{element.name}}</div>
    </template>
 </draggable>
 ```
-.vue file:
 ``` js
   import draggable from 'vuedraggable'
   ...
@@ -91,6 +93,8 @@ Use draggable component:
         },
   ...
 ```
+
+The `item` slot should be used to display items of the list. It receives the element value and the element index as slot-props.
 
 ### With `transition-group`:
 ``` html
@@ -143,6 +147,50 @@ computed: {
 }
 ```
 
+### Migrate from vue 2 version:
+
+Breaking changes:
+  1) Use `item` slot instead of default to display elements
+  2) Provide a key for items using `itemKey` props
+
+From:
+``` html
+<!-- vue 2 version -->
+<draggable v-model="myArray">
+   <div v-for="element in myArray" :key="element.id">{{element.name}}</div>
+</draggable>
+```
+To:
+``` html
+<draggable v-model="myArray" item-key="id">
+  <template #item="{element}">
+    <div>{{element.name}}</div>
+   </template>
+</draggable>
+```
+
+Breaking changes:
+  3) When using transition, you should now use the `tag` props and `componentData` to create the transition
+
+From
+``` html
+<!-- vue 2 version -->
+<draggable v-model="myArray">
+    <transition-group name="fade">
+        <div v-for="element in myArray" :key="element.id">
+            {{element.name}}
+        </div>
+    </transition-group>
+</draggable>
+```
+to
+``` html
+<draggable v-model="myArray" tag="transition-group" :component-data="{name:'fade'}">
+  <template #item="{element}">
+    <div>{{element.name}}</div>
+  </template>
+</draggable>
+```
 
 ### Props
 #### modelValue
@@ -166,12 +214,18 @@ Alternative to the `modelValue` prop, list is an array to be synchronized with d
 The main difference is that `list` prop is updated by draggable component using splice method, whereas `modelValue` is immutable.<br>
 **Do not use in conjunction with modelValue prop.**
 
+#### itemKey
+Type: `String` or `Function`<br>
+Required: `true`<br>
+
+The property to be used as the element key. Alternatively a function receiving an element of the list and returning its key.
+
 #### All sortable options
 Sortable options can be set directly as vue.draggable props since version 2.19.
 
 This means that all [sortable option](https://github.com/RubaXa/Sortable#options) are valid sortable props with the notable exception of all the method starting by "on" as draggable component expose the same API via events.
 
-kebab-case propery are supported: for example `ghost-class` props will be converted to `ghostClass` sortable option.
+kebab-case property are supported: for example `ghost-class` props will be converted to `ghostClass` sortable option.
 
 Example setting handle, sortable and a group option:
 ```HTML
@@ -309,7 +363,23 @@ HTML:
 
 ### Slots
 
-Limitation: neither header or footer slot works in conjunction with transition-group.
+#### item
+The `item` slot is used to display one element of the list. Vue.draggable will iterate the list and call this slot for each element.
+
+Slot props:
+- `element` the element in the list
+- `index` the element index
+
+It is the only required slot.
+
+
+```html
+<draggable v-model="myArray" item-key="id">
+  <template #item="{element, index}">
+    <div> {{index}} - {{element.name}} </div>
+  </template>
+</draggable>
+```
 
 #### Header
 Use the `header` slot to add none-draggable element inside the vuedraggable component.
