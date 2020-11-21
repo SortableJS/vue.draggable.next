@@ -1,5 +1,5 @@
 <p align="center"><img width="140"src="https://raw.githubusercontent.com/SortableJS/Vue.Draggable/master/logo.svg?sanitize=true"></p>
-<h1 align="center">Vue.Draggable</h1>
+<h1 align="center">vue.draggable.next</h1>
 
 [![CircleCI](https://circleci.com/gh/SortableJS/vue.draggable.next.svg?style=shield)](https://circleci.com/gh/SortableJS/Vue.Draggable)
 [![Coverage](https://codecov.io/gh/SortableJS/vue.draggable.next/branch/master/graph/badge.svg)](https://codecov.io/gh/SortableJS/Vue.Draggable)
@@ -8,7 +8,7 @@
 [![npm download](https://img.shields.io/npm/dt/vuedraggable.svg?maxAge=30)](https://www.npmjs.com/package/vuedraggable)
 [![npm download per month](https://img.shields.io/npm/dm/vuedraggable.svg)](https://www.npmjs.com/package/vuedraggable)
 [![npm version](https://img.shields.io/npm/v/vuedraggable.svg)](https://www.npmjs.com/package/vuedraggable)
-[![MIT License](https://img.shields.io/github/license/SortableJS/vue.draggable.next.svg)](https://github.com/SortableJS/Vue.Draggable/blob/master/LICENSE)
+[![MIT License](https://img.shields.io/github/license/SortableJS/vue.draggable.next.svg)](https://github.com/SortableJS/vue.draggable.next/blob/master/LICENSE)
 
 
 Vue component (Vue.js 3.0) allowing drag-and-drop and synchronization with view model array.
