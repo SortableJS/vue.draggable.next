@@ -7,7 +7,7 @@
 [![GitHub open issues](https://img.shields.io/github/issues/SortableJS/vue.draggable.next.svg)](https://github.com/SortableJS/Vue.Draggable/issues?q=is%3Aopen+is%3Aissue)
 [![npm download](https://img.shields.io/npm/dt/vuedraggable.svg?maxAge=30)](https://www.npmjs.com/package/vuedraggable)
 [![npm download per month](https://img.shields.io/npm/dm/vuedraggable.svg)](https://www.npmjs.com/package/vuedraggable)
-[![npm version](https://img.shields.io/npm/v/vuedraggable.svg)](https://www.npmjs.com/package/vuedraggable)
+[![npm version](https://img.shields.io/npm/v/vuedraggable/next.svg)](https://www.npmjs.com/package/vuedraggable/v/next)
 [![MIT License](https://img.shields.io/github/license/SortableJS/vue.draggable.next.svg)](https://github.com/SortableJS/vue.draggable.next/blob/master/LICENSE)
 
 
