@@ -1,19 +1,24 @@
-import { mount } from "@vue/test-utils";
+import { mount, config } from "@vue/test-utils";
+config.global.stubs["transition-group"] = false;
 import Sortable from "sortablejs";
+
 jest.genMockFromModule("sortablejs");
 jest.mock("sortablejs");
+
 const SortableFake = {
   destroy: jest.fn(),
-  option: jest.fn(),
+  option: jest.fn()
 };
 Sortable.mockImplementation(() => SortableFake);
 
-import Vue from "vue";
+import draggable from "@/vuedraggable";
+
+import { nextTick } from "vue";
 import DraggableWithList from "./helper/DraggableWithList";
+import DraggableWithComponent from "./helper/DraggableWithComponent.vue";
 import DraggableWithModel from "./helper/DraggableWithList";
 import DraggableWithTransition from "./helper/DraggableWithTransition";
-
-import draggable from "@/vuedraggable";
+import fake from "./helper/FakeRoot";
 
 let wrapper;
 let element;
@@ -24,18 +29,20 @@ function getEvent(name) {
 }
 
 const expectedArray = [0, 1, 3, 4, 5, 6, 7, 2, 8, 9];
-const expectedDomWithWrapper = (wrapper) =>
-  `<${wrapper}>${expectedArray
-    .map((nu) => `<div>${nu}</div>`)
+const expectedDomWithWrapper = (wrapper, attr = "") =>
+  `<${wrapper}${attr}>${expectedArray
+    .map((nu) => `<div data-draggable="true">${nu}</div>`)
     .join("")}</${wrapper}>`;
 
 const expectedDomNoTransition = expectedDomWithWrapper("span");
-const expectedDomTransition = `<div>${expectedDomWithWrapper(
-  "transition-group-stub"
-)}</div>`;
+const expectedDomTransition = expectedDomWithWrapper("div");
+const expectedDomComponent = expectedDomWithWrapper(
+  "div",
+  ' class="fake-root" id="my-id"'
+);
 
 function normalizeHTML(wrapper) {
-  return wrapper.html().replace(/(\r\n\t|\n|\r\t| )/gm, "");
+  return wrapper.html();
 }
 
 function expectHTML(wrapper, expected) {
@@ -44,28 +51,40 @@ function expectHTML(wrapper, expected) {
 }
 
 describe.each([
-  [DraggableWithList, "draggable with list", expectedDomNoTransition, "span"],
-  [DraggableWithModel, "draggable with model", expectedDomNoTransition, "span"],
+  ["draggable with list", DraggableWithList, expectedDomNoTransition, "span"],
+  ["draggable with model", DraggableWithModel, expectedDomNoTransition, "span"],
   [
-    DraggableWithTransition,
-    "draggable with transition",
-    expectedDomTransition,
-    "transition-group-stub",
+    "draggable with list and component as tag",
+    DraggableWithComponent,
+    expectedDomComponent,
+    "div"
   ],
+  [
+    "draggable with transition",
+    DraggableWithTransition,
+    expectedDomTransition,
+    "div"
+  ]
 ])(
-  "should update list and DOM with component: %s %s",
-  (component, _, expectedDom, expectWrapper) => {
+  "should update list and DOM with component: %s",
+  (_, component, expectedDom, expectWrapper) => {
     describe("when handling sort", () => {
       beforeEach(async () => {
         jest.resetAllMocks();
-        wrapper = mount(component);
+        wrapper = mount(component, {
+          global: {
+            components: {
+              fake
+            }
+          }
+        });
         vm = wrapper.vm;
         element = wrapper.find(expectWrapper).element;
 
         const item = element.children[2];
         const startEvt = { item };
         getEvent("onStart")(startEvt);
-        await Vue.nextTick();
+        await nextTick();
 
         const firstDraggable = element.children[1];
         element.removeChild(item);
@@ -76,7 +95,7 @@ describe.each([
           newIndex: 7,
           from: element,
         });
-        await Vue.nextTick();
+        await nextTick();
       });
 
       it("sends a change event", async () => {

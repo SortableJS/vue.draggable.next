@@ -1,57 +1,51 @@
 <template>
   <div class="row">
     <div class="col-4">
-      <h3>First draggable with header</h3>
+      <h3>First draggable with footer</h3>
 
       <draggable
         id="first"
         data-source="juju"
         :list="list"
         class="list-group"
-        draggable=".item"
         group="a"
+        item-key="name"
       >
-        <div
-          class="list-group-item item"
-          v-for="element in list"
-          :key="element.name"
-        >
-          {{ element.name }}
-        </div>
+        <template #item="{ element }">
+          <div class="list-group-item">
+            {{ element.name }}
+          </div>
+        </template>
 
-        <div
-          slot="header"
-          class="btn-group list-group-item"
-          role="group"
-          aria-label="Basic example"
-        >
-          <button class="btn btn-secondary" @click="add">Add</button>
-          <button class="btn btn-secondary" @click="replace">Replace</button>
-        </div>
+        <template #footer>
+          <div class="btn-group list-group-item" role="group">
+            <button class="btn btn-secondary" @click="add">Add</button>
+            <button class="btn btn-secondary" @click="replace">Replace</button>
+          </div>
+        </template>
       </draggable>
     </div>
 
     <div class="col-4">
       <h3>Second draggable with header</h3>
 
-      <draggable :list="list2" class="list-group" draggable=".item" group="a">
-        <div
-          class="list-group-item item"
-          v-for="element in list2"
-          :key="element.name"
-        >
-          {{ element.name }}
-        </div>
+      <draggable :list="list2" class="list-group" group="a" item-key="name">
+        <template #item="{ element }">
+          <div class="list-group-item item">
+            {{ element.name }}
+          </div>
+        </template>
 
-        <div
-          slot="header"
-          class="btn-group list-group-item"
-          role="group"
-          aria-label="Basic example"
-        >
-          <button class="btn btn-secondary" @click="add2">Add</button>
-          <button class="btn btn-secondary" @click="replace2">Replace</button>
-        </div>
+        <template #header>
+          <div
+            class="btn-group list-group-item"
+            role="group"
+            aria-label="Basic example"
+          >
+            <button class="btn btn-secondary" @click="add2">Add</button>
+            <button class="btn btn-secondary" @click="replace2">Replace</button>
+          </div>
+        </template>
       </draggable>
     </div>
 
@@ -78,7 +72,10 @@ export default {
         { name: "Joao 2", id: 1 },
         { name: "Jean 3", id: 2 }
       ],
-      list2: [{ name: "Jonny 4", id: 3 }, { name: "Guisepe 5", id: 4 }]
+      list2: [
+        { name: "Jonny 4", id: 3 },
+        { name: "Guisepe 5", id: 4 }
+      ]
     };
   },
   methods: {

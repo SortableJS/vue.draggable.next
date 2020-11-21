@@ -2,15 +2,18 @@
  * @jest-environment node
  */
 
-const Vue = require('vue');
-const renderer = require('vue-server-renderer').createRenderer();
+const { createSSRApp } = require("vue");
+const { renderToString } = require("@vue/server-renderer");
 const draggable = require("@/vuedraggable").default;
-Vue.component('draggable', draggable);
-const app = new Vue({
+
+const app = createSSRApp({
   name: "test-app",
-  template: `<draggable :list="items"><div v-for="item in items" :key="item">{{item}}</div></draggable>`,
-  data:{
-    items:["a","b","c"]
+  template: `<draggable :list="items" :item-key="k => k"><template #item="{element}"><div>{{element}}</div></template></draggable>`,
+  data: () => ({
+    items: ["a", "b", "c"]
+  }),
+  components: {
+    draggable
   }
 });
 
@@ -18,11 +21,11 @@ let html;
 
 describe("vuedraggable in a SSR context", () => {
   beforeEach(async () => {
-    html = await renderer.renderToString(app);
+    html = await renderToString(app);
   });
 
   it("can be rendered", () => {
-    const expected = '<div data-server-rendered="true"><div>a</div><div>b</div><div>c</div></div>';
+    const expected =`<div><div data-draggable="true">a</div><div data-draggable="true">b</div><div data-draggable="true">c</div></div>`;
     expect(html).toEqual(expected);
-  })
-})
+  });
+});

@@ -4,9 +4,9 @@
       <h3>
         Integration with
         <a
-          href="https://element.eleme.io/#/en-US/component/collapse#collapse"
+          href="https://element-plus.org/#/en-US/component/collapse"
           target="_blank"
-          >Element collapse</a
+          >Element+ collapse</a
         >
       </h3>
 
@@ -14,15 +14,13 @@
         tag="el-collapse"
         :list="list"
         :component-data="collapseComponentData"
+        item-key="id"
       >
-        <el-collapse-item
-          v-for="item in list"
-          :key="item.id"
-          :title="item.title"
-          :name="item.id"
-        >
-          <div v-for="(lign, idx) in item.text" :key="idx">{{ lign }}</div>
-        </el-collapse-item>
+        <template #item="{ element }">
+          <el-collapse-item :title="element.title" :name="element.id">
+            <div v-for="(lign, idx) in element.text" :key="idx">{{ lign }}</div>
+          </el-collapse-item>
+        </template>
       </draggable>
     </div>
     <rawDisplayer class="col-3" :value="list" title="List" />
@@ -31,7 +29,6 @@
 </template>
 
 <script>
-import "element-ui/lib/theme-chalk/index.css";
 import draggable from "@/vuedraggable";
 
 export default {
@@ -42,6 +39,7 @@ export default {
     draggable
   },
   data() {
+    const activeNames = [1];
     return {
       list: [
         {
@@ -78,14 +76,10 @@ export default {
           ]
         }
       ],
-      activeNames: [1],
+      activeNames,
       collapseComponentData: {
-        on: {
-          input: this.inputChanged
-        },
-        props: {
-          value: this.activeNames
-        }
+        "onUpdate:modelValue": this.inputChanged,
+        modelValue: activeNames
       }
     };
   },

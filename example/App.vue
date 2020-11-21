@@ -23,16 +23,16 @@
         <div id="badges">
           <a
             target="_blank"
-            href="https://circleci.com/gh/SortableJS/Vue.Draggable"
+            href="https://circleci.com/gh/SortableJS/vue.draggable.next"
             ><img
-              src="https://circleci.com/gh/SortableJS/Vue.Draggable.svg?style=shield"
+              src="https://circleci.com/gh/SortableJS/vue.draggable.next.svg?style=shield"
             />
           </a>
           <a
             target="_blank"
-            href="https://codecov.io/gh/SortableJS/Vue.Draggable"
+            href="https://codecov.io/gh/SortableJS/vue.draggable.next"
             ><img
-              src="https://codecov.io/gh/SortableJS/Vue.Draggable/branch/master/graph/badge.svg"
+              src="https://codecov.io/gh/SortableJS/vue.draggable.next/branch/master/graph/badge.svg"
             />
           </a>
           <a
@@ -44,9 +44,9 @@
           </a>
           <a
             target="_blank"
-            href="https://github.com/SortableJS/Vue.Draggable/issues?q=is%3Aopen+is%3Aissue"
+            href="https://github.com/SortableJS/vue.draggable.next/issues?q=is%3Aopen+is%3Aissue"
             ><img
-              src="https://img.shields.io/github/issues/SortableJS/Vue.Draggable.svg"
+              src="https://img.shields.io/github/issues/SortableJS/vue.draggable.next.svg"
             />
           </a>
           <a target="_blank" href="https://www.npmjs.com/package/vuedraggable"
@@ -60,9 +60,9 @@
           </a>
           <a
             target="_blank"
-            href="https://github.com/SortableJS/Vue.Draggable/blob/master/LICENSE"
+            href="https://github.com/SortableJS/vue.draggable.next/blob/master/LICENSE"
             ><img
-              src="https://img.shields.io/github/license/SortableJS/Vue.Draggable.svg"
+              src="https://img.shields.io/github/license/SortableJS/vue.draggable.next.svg"
             />
           </a>
         </div>
@@ -103,9 +103,7 @@
                 class="icon github"
                 target="_blank"
                 :href="
-                  `https://github.com/SortableJS/Vue.Draggable/blob/master/example/components/${
-                    component.name
-                  }.vue`
+                  `https://github.com/SortableJS/vue.draggable.next/blob/master/example/components/${component.name}.vue`
                 "
               >
                 <button class="btn btn-secondary">
@@ -134,7 +132,6 @@ const components = requireContext.keys().reduce((acc, key) => {
 }, {});
 
 const showAll = process.env.VUE_APP_SHOW_ALL_EXAMPLES === "true";
-window.console.log(process.env.VUE_APP_SHOW_ALL_EXAMPLES);
 if (showAll) {
   const order = Object.keys(components);
   const requireContextDebug = require.context(
@@ -155,8 +152,8 @@ export default {
   name: "app",
   components,
   data() {
-    const componentList = Object.keys(components)
-      .map(key => components[key])
+    const componentList = Object.values(components)
+      .filter(component => component.show)
       .sort((a, b) => a.order - b.order);
     return {
       componentList

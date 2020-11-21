@@ -7,30 +7,28 @@
         tag="transition-group"
         :componentData="componentData"
         :list="list"
-        class="list-group"
-        draggable=".item"
         :animation="100"
         @start="dragging = true"
         @end="dragging = false"
+        item-key="name"
       >
-        <div
-          class="list-group-item item"
-          v-for="element in list"
-          :key="element.name"
-        >
-          {{ element.name }}
-        </div>
+        <template #item="{ element }">
+          <div class="list-group-item">
+            {{ element.name }}
+          </div>
+        </template>
 
-        <div
-          slot="footer"
-          class="btn-group list-group-item"
-          role="group"
-          aria-label="Basic example"
-          key="footer"
-        >
-          <button class="btn btn-secondary" @click="add">Add</button>
-          <button class="btn btn-secondary" @click="replace">Replace</button>
-        </div>
+        <template #footer>
+          <div
+            class="btn-group list-group-item"
+            role="group"
+            aria-label="Basic example"
+            key="footer"
+          >
+            <button class="btn btn-secondary" @click="add">Add</button>
+            <button class="btn btn-secondary" @click="replace">Replace</button>
+          </div>
+        </template>
       </draggable>
     </div>
 
@@ -57,10 +55,8 @@ export default {
       ],
       dragging: false,
       componentData: {
-        props: {
-          type: "transition",
-          name: "flip-list"
-        }
+        type: "transition",
+        name: "flip-list"
       }
     };
   },

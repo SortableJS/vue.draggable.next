@@ -4,13 +4,15 @@
     :disabled="!enabled"
     class="list-group"
     ghost-class="ghost"
-    :move="checkMove"
     @start="dragging = true"
     @end="dragging = false"
+    item-key="name"
   >
-    <div class="list-group-item" v-for="element in list" :key="element.name">
-      {{ element.name }}
-    </div>
+    <template #item="{ element }">
+      <div class="list-group-item">
+        {{ element.name }}
+      </div>
+    </template>
   </draggable>
 </template>
 
@@ -40,17 +42,6 @@ export default {
   computed: {
     draggingInfo() {
       return this.dragging ? "under drag" : "";
-    }
-  },
-  methods: {
-    add: function() {
-      this.list.push({ name: "Juan " + id, id: id++ });
-    },
-    replace: function() {
-      this.list = [{ name: "Edgard", id: id++ }];
-    },
-    checkMove: function(e) {
-      window.console.log("Future index: " + e.draggedContext.futureIndex);
     }
   }
 };

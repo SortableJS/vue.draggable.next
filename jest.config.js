@@ -22,10 +22,11 @@ module.exports = {
   testURL: "http://localhost/",
   collectCoverageFrom: [
     "<rootDir>/src/vuedraggable.js",
-    "<rootDir>/src/util/helper.js"
+    "<rootDir>/src/util/*.js",
+    "<rootDir>/src/core/*.js"
   ],
  // testEnvironment: "node",
   transformIgnorePatterns: [
-    "node_modules/(?!(babel-jest|jest-vue-preprocessor)/)"
+    "node_modules/(?!(babel-jest|jest-vue-preprocessor|vue)/)"
   ],
 };
