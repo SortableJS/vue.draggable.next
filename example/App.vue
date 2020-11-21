@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <a href="https://github.com/SortableJS/Vue.Draggable" target="_blank">
+    <a href="https://github.com/SortableJS/vue.draggable.next" target="_blank">
       <img
         style="position: fixed; top: 0; right: 0; border: 0; z-index:99999"
         width="149"
