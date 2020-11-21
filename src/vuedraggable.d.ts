@@ -63,7 +63,6 @@ declare module 'vuedraggable' {
       options: any;
       list: any[];
       value: any[];
-      noTransitionOnDrag?: boolean;
       clone: any;
       tag?: string | null;
       move: any;
