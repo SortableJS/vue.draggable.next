@@ -67,12 +67,16 @@ const props = {
   }
 };
 
+const emits = ["change", "start", "add", "remove", "update", "end", "choose", "unchoose", "sort", "filter", "clone"];
+
 const draggableComponent = defineComponent({
   name: "draggable",
 
   inheritAttrs: false,
 
   props,
+
+  emits,
 
   data() {
     return {
