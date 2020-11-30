@@ -7,6 +7,7 @@ import {
   getValidSortableEntries
 } from "./core/componentBuilderHelper";
 import { computeComponentStructure } from "./core/renderHelper";
+import { events } from "./core/sortableEvents";
 import { h, defineComponent, nextTick } from "vue";
 
 function emit(evtName, evtData) {
@@ -67,12 +68,20 @@ const props = {
   }
 };
 
+const emits = [
+  "update:modelValue",
+  "change",
+  ...[...events.manageAndEmit, ...events.emit].map(evt => evt.toLowerCase())
+];
+
 const draggableComponent = defineComponent({
   name: "draggable",
 
   inheritAttrs: false,
 
   props,
+
+  emits,
 
   data() {
     return {
