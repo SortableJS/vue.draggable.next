@@ -52,7 +52,9 @@
           <a target="_blank" href="https://www.npmjs.com/package/vuedraggable"
             ><img src="https://img.shields.io/npm/dt/vuedraggable.svg" />
           </a>
-          <a target="_blank" href="https://www.npmjs.com/package/vuedraggable/v/next"
+          <a
+            target="_blank"
+            href="https://www.npmjs.com/package/vuedraggable/v/next"
             ><img src="https://img.shields.io/npm/v/vuedraggable/next.svg" />
           </a>
           <a target="_blank" href="https://www.npmjs.com/package/vuedraggable"
