@@ -4511,7 +4511,7 @@ var componentStructure_ComponentStructure = /*#__PURE__*/function () {
       var defaultNodes = this.defaultNodes,
           realList = this.realList;
       defaultNodes.forEach(function (node, index) {
-        addContext(getHtmlElementFromNode(node), {
+        addContext(getHtmlElementFromNode(node) || {}, {
           element: realList[index],
           index: index
         });
@@ -4817,7 +4817,11 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
     targetDomElement.__draggable_component__ = this;
   },
   updated: function updated() {
-    this.componentStructure.updated();
+    var _this5 = this;
+
+    this.$nextTick(function () {
+      return _this5.componentStructure.updated();
+    });
   },
   beforeUnmount: function beforeUnmount() {
     if (this._sortable !== undefined) this._sortable.destroy();
@@ -4863,10 +4867,10 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
       return htmElement.__draggable_component__;
     },
     emitChanges: function emitChanges(evt) {
-      var _this5 = this;
+      var _this6 = this;
 
       Object(external_commonjs_vue_commonjs2_vue_root_Vue_["nextTick"])(function () {
-        return _this5.$emit("change", evt);
+        return _this6.$emit("change", evt);
       });
     },
     alterList: function alterList(onList) {
