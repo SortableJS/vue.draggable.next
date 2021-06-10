@@ -91,6 +91,11 @@ npm i -S vuedraggable@next
         components: {
             draggable,
         },
+        data() {
+          return {
+            drag: false,
+          }
+        },
   ...
 ```
 

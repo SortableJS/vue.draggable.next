@@ -1,4 +1,4 @@
-import { isHtmlTag, isTransition } from "@/util/tags";
+import { isHtmlTag, isTransition, isHtmlAttribute } from "@/util/tags";
 
 describe("isHtmlTag", () => {
   test.each([
@@ -12,6 +12,25 @@ describe("isHtmlTag", () => {
     "for %s returns %s",
     (value, expected) =>{
       const actual = isHtmlTag(value);
+      expect(actual).toEqual(expected);
+    }
+  )
+});
+
+describe("isHtmlAttribute", () => {
+  test.each([
+    ["class", true],
+    ["id", true],
+    ["role", true],
+    ["data-whatever", true],
+    ["aria-whatever", true],
+    ["notattribute", false],
+    ["href", false],
+    ["name", false],
+  ])(
+    "for %s returns %s",
+    (value, expected) =>{
+      const actual = isHtmlAttribute(value);
       expect(actual).toEqual(expected);
     }
   )
