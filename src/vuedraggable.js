@@ -165,6 +165,7 @@ const draggableComponent = defineComponent({
     $attrs: {
       handler(newOptionValue) {
         const { _sortable } = this;
+        if (!_sortable) return;
         getValidSortableEntries(newOptionValue).forEach(([key, value]) => {
           _sortable.option(key, value);
         });
