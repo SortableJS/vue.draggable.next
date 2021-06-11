@@ -24,6 +24,7 @@ describe("isHtmlAttribute", () => {
     ["role", true],
     ["data-whatever", true],
     ["aria-whatever", true],
+    ["style", true],
     ["notattribute", false],
     ["href", false],
     ["name", false],
