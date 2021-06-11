@@ -30,7 +30,7 @@ class ComponentStructure {
   updated() {
     const { defaultNodes, realList } = this;
     defaultNodes.forEach((node, index) => {
-      addContext(getHtmlElementFromNode(node), {
+      addContext(getHtmlElementFromNode(node) || {}, {
         element: realList[index],
         index
       });
