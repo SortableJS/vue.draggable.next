@@ -1,5 +1,6 @@
-import { mount, config } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import Sortable from "sortablejs";
+import { expectHTML, normalizeHTML } from "./helper/setup"
 jest.mock("sortablejs");
 const SortableFake = {
   destroy: jest.fn(),
@@ -25,15 +26,6 @@ const initialRender = `<div><header></header><div data-draggable="true">a</div><
 const initialRenderRaw = `<div><div data-draggable="true">a</div><div data-draggable="true">b</div><div data-draggable="true">c</div></div>`;
 const initialRenderTransition = `<transition-group-stub><div data-draggable="true">a</div><div data-draggable="true">b</div><div data-draggable="true">c</div></transition-group-stub>`;
 
-function normalizeHTML(wrapper) {
-  return wrapper.html();
-}
-
-function expectHTML(wrapper, expected) {
-  const htmlStripped = normalizeHTML(wrapper);
-  expect(htmlStripped).toEqual(expected);
-}
-
 function getEvent(name) {
   return Sortable.mock.calls[0][1][name];
 }
@@ -45,7 +37,7 @@ function resetMocks() {
 }
 
 describe("draggable.vue when initialized with list", () => {
-  beforeEach(() => {
+  beforeEach(() => {    
     resetMocks();
 
     items = ["a", "b", "c"];
@@ -792,7 +784,7 @@ describe("draggable.vue when initialized with list", () => {
     });
 
     it("updates the rendered elements", () => {
-      expect(wrapper.html()).toEqual(updatedRender);
+      expectHTML(wrapper, updatedRender);
     });
   });
 

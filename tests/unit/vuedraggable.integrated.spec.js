@@ -1,6 +1,7 @@
 import { mount, config } from "@vue/test-utils";
 config.global.stubs["transition-group"] = false;
 import Sortable from "sortablejs";
+import { expectHTML } from "./helper/setup"
 
 jest.genMockFromModule("sortablejs");
 jest.mock("sortablejs");
@@ -40,15 +41,6 @@ const expectedDomComponent = expectedDomWithWrapper(
   "div",
   ' class="fake-root" id="my-id"'
 );
-
-function normalizeHTML(wrapper) {
-  return wrapper.html();
-}
-
-function expectHTML(wrapper, expected) {
-  const htmlStripped = normalizeHTML(wrapper);
-  expect(htmlStripped).toEqual(expected);
-}
 
 describe.each([
   ["draggable with list", DraggableWithList, expectedDomNoTransition, "span"],
