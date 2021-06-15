@@ -249,7 +249,7 @@ const draggableComponent = defineComponent({
     },
 
     onDragRemove(evt) {
-      insertNodeAt(this.$el, evt.item, evt.oldIndex);
+      insertNodeAt(evt.from, evt.item, evt.oldIndex);
       if (evt.pullMode === "clone") {
         removeNode(evt.clone);
         return;
