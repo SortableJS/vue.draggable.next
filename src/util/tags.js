@@ -127,7 +127,12 @@ function isTransition(name) {
 }
 
 function isHtmlAttribute(value) {
-  return ["id", "class", "role", "style"].includes(value) || value.startsWith("data-") || value.startsWith("aria-");
+  return (
+    ["id", "class", "role", "style"].includes(value) ||
+    value.startsWith("data-") ||
+    value.startsWith("aria-") ||
+    value.startsWith("on")
+  );
 }
 
 export { isHtmlTag, isHtmlAttribute, isTransition };
