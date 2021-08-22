@@ -1,91 +1,74 @@
-declare module 'vuedraggable' {
-
-  import { ComponentPublicInstance, VueConstructor } from 'vue';
-
-  type CombinedVueInstance<
-    Instance extends ComponentPublicInstance,
-    Data,
-    Methods,
-    Computed,
-    Props
-  > = Data & Methods & Computed & Props & Instance;
-
-  type ExtendedVue<
-    Instance extends ComponentPublicInstance,
-    Data,
-    Methods,
-    Computed,
-    Props
-  > = VueConstructor<
-    CombinedVueInstance<Instance, Data, Methods, Computed, Props> & ComponentPublicInstance
-  >;
-
-  export type DraggedContext<T> = {
-    index: number;
-    futureIndex: number;
-    element: T;
-  };
-
-  export type DropContext<T> = {
-    index: number;
-    component: ComponentPublicInstance;
-    element: T;
-  };
-
-  export type Rectangle = {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-    width: number;
-    height: number;
-  };
-
-  export type MoveEvent<T> = {
-    originalEvent: DragEvent;
-    dragged: Element;
-    draggedContext: DraggedContext<T>;
-    draggedRect: Rectangle;
-    related: Element;
-    relatedContext: DropContext<T>;
-    relatedRect: Rectangle;
-    from: Element;
-    to: Element;
-    willInsertAfter: boolean;
-    isTrusted: boolean;
-  };
-
-  export type ChangeEvent<T> = {
-    added?: {
-      element: T;
-      newIndex: number;
+declare const draggableComponent: import("vue").DefineComponent<{
+    list: {
+        type: ArrayConstructor;
+        required: boolean;
+        default: any;
     };
-    removed?: {
-      element: T;
-      oldIndex: number;
+    modelValue: {
+        type: ArrayConstructor;
+        required: boolean;
+        default: any;
     };
-    moved?: {
-      element: T;
-      newIndex: number;
-      oldIndex: number;
+    itemKey: {
+        type: (FunctionConstructor | StringConstructor)[];
+        required: boolean;
     };
-  };
-
-  const draggable: ExtendedVue<
-    ComponentPublicInstance,
-    {},
-    {},
-    {},
-    {
-      options: any;
-      list: any[];
-      value: any[];
-      clone: any;
-      tag?: string | null;
-      move: any;
-      componentData: any;
-    }
-  >;
-
-  export default draggable;
-}
+    clone: {
+        type: FunctionConstructor;
+        default: (original: any) => any;
+    };
+    tag: {
+        type: StringConstructor;
+        default: string;
+    };
+    move: {
+        type: FunctionConstructor;
+        default: any;
+    };
+    componentData: {
+        type: ObjectConstructor;
+        required: boolean;
+        default: any;
+    };
+}, unknown, {
+    error: boolean;
+}, {
+    realList(): any;
+    getKey(): any;
+}, {
+    getUnderlyingVm(domElement: any): any;
+    getUnderlyingPotencialDraggableComponent(htmElement: any): any;
+    emitChanges(evt: any): void;
+    alterList(onList: any): void;
+    spliceList(): void;
+    updatePosition(oldIndex: any, newIndex: any): void;
+    getRelatedContextFromMoveEvent({ to, related }: {
+        to: any;
+        related: any;
+    }): any;
+    getVmIndexFromDomIndex(domIndex: any): any;
+    onDragStart(evt: any): void;
+    onDragAdd(evt: any): void;
+    onDragRemove(evt: any): void;
+    onDragUpdate(evt: any): void;
+    computeFutureIndex(relatedContext: any, evt: any): any;
+    onDragMove(evt: any, originalEvent: any): any;
+    onDragEnd(): void;
+}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, any[], any, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
+    move: Function;
+    tag: string;
+    clone: Function;
+    list: unknown[];
+    modelValue: unknown[];
+    componentData: Record<string, any>;
+} & {
+    itemKey?: string | Function;
+}>, {
+    move: Function;
+    tag: string;
+    clone: Function;
+    list: unknown[];
+    modelValue: unknown[];
+    componentData: Record<string, any>;
+}>;
+export default draggableComponent;
