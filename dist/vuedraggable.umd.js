@@ -4351,7 +4351,7 @@ function isTransition(name) {
 }
 
 function isHtmlAttribute(value) {
-  return ["id", "class"].includes(value) || value.startsWith("data-");
+  return ["id", "class", "role", "style"].includes(value) || value.startsWith("data-") || value.startsWith("aria-") || value.startsWith("on");
 }
 
 
@@ -4852,6 +4852,7 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
     $attrs: {
       handler: function handler(newOptionValue) {
         var _sortable = this._sortable;
+        if (!_sortable) return;
         getValidSortableEntries(newOptionValue).forEach(function (_ref) {
           var _ref2 = _slicedToArray(_ref, 2),
               key = _ref2[0],
