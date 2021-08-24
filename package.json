@@ -4,7 +4,7 @@
   "description": "draggable component for vue",
   "license": "MIT",
   "main": "dist/vuedraggable.umd.min.js",
-  "types": "src/vuedraggable.d.ts",
+  "types": "types/vuedraggable.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/SortableJS/Vue.Draggable.git"
@@ -15,9 +15,10 @@
     "build:doc": "vue-cli-service build ./example/main.js --dest docs --mode development",
     "build": "vue-cli-service build --name vuedraggable --entry ./src/vuedraggable.js --target lib",
     "lint": "vue-cli-service lint src example",
-    "prepublishOnly": "npm run lint && npm run test:unit && npm run build:doc && npm run build",
+    "prepublishOnly": "npm run lint && npm run test:unit && npm run build:doc && npm run build:type && npm run build",
     "test:unit": "vue-cli-service test:unit --coverage",
-    "test:coverage": "vue-cli-service test:unit --coverage --verbose && codecov"
+    "test:coverage": "vue-cli-service test:unit --coverage --verbose && codecov",
+    "build:type": "tsc"
   },
   "keywords": [
     "vue",
@@ -37,6 +38,7 @@
     "vue": "^3.0.1"
   },
   "devDependencies": {
+    "@types/sortablejs": "^1.10.7",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "^4.5.4",
@@ -57,7 +59,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
-    "typescript": "^4.0.3",
+    "typescript": "^4.3.5",
     "vue": "^3.0.1",
     "vue-jest": "^5.0.0-alpha.5",
     "vue-router": "^4.0.0-beta.13",
@@ -91,6 +93,7 @@
     "dist/*.css",
     "dist/*.map",
     "dist/*.js",
+    "types/*",
     "src/*"
   ],
   "module": "dist/vuedraggable.umd.js"
