@@ -1,3 +1,4 @@
+export default draggableComponent;
 declare const draggableComponent: import("vue").DefineComponent<{
     list: {
         type: ArrayConstructor;
@@ -30,7 +31,7 @@ declare const draggableComponent: import("vue").DefineComponent<{
         required: boolean;
         default: any;
     };
-}, unknown, {
+}, any, {
     error: boolean;
 }, {
     realList(): any;
@@ -54,21 +55,20 @@ declare const draggableComponent: import("vue").DefineComponent<{
     computeFutureIndex(relatedContext: any, evt: any): any;
     onDragMove(evt: any, originalEvent: any): any;
     onDragEnd(): void;
-}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, any[], any, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
+}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, string[], string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
     move: Function;
-    tag: string;
     clone: Function;
+    componentData: Record<string, any>;
+    tag: string;
     list: unknown[];
     modelValue: unknown[];
-    componentData: Record<string, any>;
 } & {
     itemKey?: string | Function;
 }>, {
     move: Function;
-    tag: string;
     clone: Function;
+    componentData: Record<string, any>;
+    tag: string;
     list: unknown[];
     modelValue: unknown[];
-    componentData: Record<string, any>;
 }>;
-export default draggableComponent;

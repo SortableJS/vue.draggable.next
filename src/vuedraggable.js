@@ -199,6 +199,7 @@ const draggableComponent = defineComponent({
     },
 
     spliceList() {
+      // @ts-ignore
       const spliceList = list => list.splice(...arguments);
       this.alterList(spliceList);
     },
@@ -243,6 +244,7 @@ const draggableComponent = defineComponent({
       }
       removeNode(evt.item);
       const newIndex = this.getVmIndexFromDomIndex(evt.newIndex);
+      // @ts-ignore
       this.spliceList(newIndex, 0, element);
       const added = { element, newIndex };
       this.emitChanges({ added });
@@ -255,6 +257,7 @@ const draggableComponent = defineComponent({
         return;
       }
       const { index: oldIndex, element } = this.context;
+      // @ts-ignore
       this.spliceList(oldIndex, 1);
       const removed = { element, oldIndex };
       this.emitChanges({ removed });
