@@ -44,7 +44,6 @@ export default {
         { id: 3, name: "Courtenay", sport: "volley" },
         { id: 4, name: "David", sport: "rugby" }
       ],
-      dragging: false
     };
   }
 };
