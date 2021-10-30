@@ -162,7 +162,7 @@ From:
 ``` html
 <!-- vue 2 version -->
 <draggable v-model="myArray">
-   <div v-for="element in myArray" :key="element.id">{{element.name}}</div>
+   <div v-for="item in myArray" :key="item.id">{{item.name}}</div>
 </draggable>
 ```
 To:
