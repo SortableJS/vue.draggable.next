@@ -124,7 +124,9 @@ describe("createSortableOption", () => {
         draggable: "[data-draggable].draggable",
         onChoose: "Choose",
         onClone: "Clone",
+        onDeselect: "Deselect",
         onFilter: "Filter",
+        onSelect: "Select",
         onSort: "Sort",
         onUnchoose: "Unchoose"
       }
@@ -145,7 +147,9 @@ describe("createSortableOption", () => {
         draggable: "[data-draggable]",
         onChoose: "emit-Choose",
         onClone: "emit-Clone",
+        onDeselect: "emit-Deselect",
         onFilter: "emit-Filter",
+        onSelect: "emit-Select",
         onSort: "emit-Sort",
         onUnchoose: "emit-Unchoose",
         onMove: "manage-Move",
