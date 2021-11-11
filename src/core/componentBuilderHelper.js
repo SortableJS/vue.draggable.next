@@ -26,7 +26,7 @@ function createSortableOption({ $attrs, callBackBuilder }) {
       options[`on${event}`] = eventBuilder(event);
     });
   });
-  const draggable = `[data-draggable]${options.draggable || ""}`;
+  const draggable = `>[data-draggable]${options.draggable || ""}`;
   return {
     ...options,
     draggable
