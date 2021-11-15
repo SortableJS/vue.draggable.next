@@ -32,7 +32,7 @@
     "nested"
   ],
   "dependencies": {
-    "sortablejs": "^1.14.0"
+    "sortablejs": "SortableJS/Sortable"
   },
   "peerDependencies": {
     "vue": "^3.0.1"

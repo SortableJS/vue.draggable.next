@@ -9380,10 +9380,9 @@ sort-keys@^1.0.0:
   dependencies:
     is-plain-obj "^1.0.0"
 
-sortablejs@^1.14.0:
+sortablejs@SortableJS/Sortable:
   version "1.14.0"
-  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.14.0.tgz#6d2e17ccbdb25f464734df621d4f35d4ab35b3d8"
-  integrity sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==
+  resolved "https://codeload.github.com/SortableJS/Sortable/tar.gz/daaefedad3c59204edfdbb27706e1447e6eb41d8"
 
 source-list-map@^2.0.0:
   version "2.0.1"
