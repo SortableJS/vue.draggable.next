@@ -1,10 +1,24 @@
-import { ComponentStructure } from "./componentStructure";
-import { isHtmlTag, isTransition } from "../util/tags";
 import { resolveComponent, TransitionGroup } from "vue";
+import { isHtmlTag, isTransition } from "../util/tags";
+import { ComponentStructure } from "./componentStructure";
 
 function getSlot(slots, key) {
   const slotValue = slots[key];
   return slotValue ? slotValue() : [];
+}
+
+function getRealNode(rawNode) {
+  let node = rawNode;
+  let failed = false;
+  while (!failed && node && !node.el) {
+    const children = node.children;
+    if (children && typeof children !== "string" && children.length === 1) {
+      node = children[0];
+    } else {
+      failed = true;
+    }
+  }
+  return node;
 }
 
 function computeNodes({ $slots, realList, getKey }) {
@@ -17,9 +31,12 @@ function computeNodes({ $slots, realList, getKey }) {
     throw new Error("draggable element must have an item slot");
   }
   const defaultNodes = normalizedList.flatMap((element, index) =>
-    item({ element, index }).map(node => {
-      node.key = getKey(element);
-      node.props = { ...(node.props || {}), "data-draggable": true };
+    item({ element, index }).map(rawNode => {
+      const node = getRealNode(rawNode);
+      if (node) {
+        node.key = getKey(element);
+        node.props = { ...(node.props || {}), "data-draggable": true };
+      }
       return node;
     })
   );
