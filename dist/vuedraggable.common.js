@@ -5166,7 +5166,7 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
       var _this7 = this;
 
       // for match item index and element index
-      var headerSize = (this.$slots.header || []).length || 0; // sort old indicies
+      var headerSize = (this.$slots.header ? this.$slots.header() : []).length || 0; // sort old indicies
       // - "order by index asc" for prevent Node.insertBefore side effect
 
       var items = evt.oldIndicies.sort(function (_ref7, _ref8) {
@@ -5243,7 +5243,7 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
       var items = evt.items,
           from = evt.from; // for match item index and element index
 
-      var headerSize = (this.$slots.header || []).length || 0; // remove nodes
+      var headerSize = (this.$slots.header ? this.$slots.header() : []).length || 0; // remove nodes
 
       items.forEach(function (item) {
         return removeNode(item);

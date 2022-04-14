@@ -336,7 +336,8 @@ const draggableComponent = defineComponent({
 
     onDragRemoveMulti(evt) {
       // for match item index and element index
-      const headerSize = (this.$slots.header || []).length || 0;
+      const headerSize =
+        (this.$slots.header ? this.$slots.header() : []).length || 0;
       // sort old indicies
       // - "order by index asc" for prevent Node.insertBefore side effect
       const items = evt.oldIndicies.sort(({ index: a }, { index: b }) => a - b);
@@ -388,7 +389,8 @@ const draggableComponent = defineComponent({
     onDragUpdateMulti(evt) {
       const { items, from } = evt;
       // for match item index and element index
-      const headerSize = (this.$slots.header || []).length || 0;
+      const headerSize =
+        (this.$slots.header ? this.$slots.header() : []).length || 0;
       // remove nodes
       items.forEach(item => removeNode(item));
       // sort items
