@@ -14,7 +14,7 @@
       >
         <template #item="{ element }">
           <div class="list-group-item">
-            {{ element.name }}
+            <div>{{ element.name }}</div>
           </div>
         </template>
 
