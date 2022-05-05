@@ -6,7 +6,10 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: 
+      - main
+      - "releases/**"
+      - master
   pull_request:
     branches: [ master ]
 
@@ -22,6 +25,36 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # 拉取 github 仓库代码
+      - uses: actions/checkout@v3
+      # 设定 node 环境
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          # 设置发包 npm 地址仓库
+          registry-url: https://registry.npmjs.org
+      # 安装依赖，相当于 npm ci
+      - name: Install dependencies 📦️
+        run: npm install
+      # 执行构建步骤
+      - name: 构建
+        run: |
+          npm run build
+      # 执行部署
+      - name: 部署
+        # 这个 action 会根据配置自动推送代码到指定分支
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          # 指定密钥，即在第一步中设置的
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          # 指定推送到的远程分支
+          BRANCH: master
+          # 指定构建之后的产物要推送哪个目录的代码
+          FOLDER: dist
+      - run: npm publish
+        env:
+          # 刚刚设置的 NPM_TOKEN
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
