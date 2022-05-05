@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <a href="https://github.com/SortableJS/vue.draggable.next" target="_blank">
+    <a href="https://github.com/zhyswan/vue.draggable.next" target="_blank">
       <img
         style="position: fixed; top: 0; right: 0; border: 0; z-index:99999"
         width="149"
@@ -44,7 +44,7 @@
           </a>
           <a
             target="_blank"
-            href="https://github.com/SortableJS/vue.draggable.next/issues?q=is%3Aopen+is%3Aissue"
+            href="https://github.com/zhyswan/vue.draggable.next/issues?q=is%3Aopen+is%3Aissue"
             ><img
               src="https://img.shields.io/github/issues/SortableJS/vue.draggable.next.svg"
             />
@@ -62,7 +62,7 @@
           </a>
           <a
             target="_blank"
-            href="https://github.com/SortableJS/vue.draggable.next/blob/master/LICENSE"
+            href="https://github.com/zhyswan/vue.draggable.next/blob/master/LICENSE"
             ><img
               src="https://img.shields.io/github/license/SortableJS/vue.draggable.next.svg"
             />
@@ -105,7 +105,7 @@
                 class="icon github"
                 target="_blank"
                 :href="
-                  `https://github.com/SortableJS/vue.draggable.next/blob/master/example/components/${component.name}.vue`
+                  `https://github.com/zhyswan/vue.draggable.next/blob/master/example/components/${component.name}.vue`
                 "
               >
                 <button class="btn btn-secondary">

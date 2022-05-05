@@ -13,7 +13,7 @@ import "element-plus/lib/theme-chalk/index.css";
 require("bootstrap");
 
 const router = createRouter({
-  history: createWebHashHistory("/vue.draggable.next/"),
+  history: createWebHashHistory("/drag/"),
   routes
 });
 
