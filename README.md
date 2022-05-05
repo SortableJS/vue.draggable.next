@@ -13,7 +13,7 @@
 
 Vue component (Vue.js 3.0) allowing drag-and-drop and synchronization with view model array.
 
-Based on and offering all features of [Sortable.js](https://github.com/RubaXa/Sortable)
+Based on and offering all features of [Sortable.js](https://github.com/RubaXa/Sortable) [vue.draggable.next](https://github.com/SortableJS/vue.draggable.next) 
 
 ## Demo
 
