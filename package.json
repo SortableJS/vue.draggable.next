@@ -1,6 +1,6 @@
 {
   "name": "zhyswan-vuedraggable",
-  "version": "4.1.0",
+  "version": "4.1.0.1",
   "description": "draggable component for vue",
   "license": "MIT",
   "main": "dist/vuedraggable.umd.min.js",
