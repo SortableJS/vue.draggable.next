@@ -52,23 +52,12 @@ Find this project useful? You can buy me a :coffee: or a :beer:
 ### With npm or yarn 
 
 ```bash
-yarn add vuedraggable@next
+yarn add zhyswan-vuedraggable
 
-npm i -S vuedraggable@next
+npm i zhyswan-vuedraggable
 ```
 
-### with direct link 
-```html
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/vue/3.0.2/vue.min.js"></script>
-<!-- CDNJS :: Sortable (https://cdnjs.com/) -->
-<script src="//cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
-<!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/4.0.0/vuedraggable.umd.min.js"></script>
-
-```
-
-[cf example section](https://github.com/SortableJS/Vue.Draggable/tree/master/example)
 
 
 ## Typical use:
@@ -105,7 +94,9 @@ The `item` slot should be used to display items of the list. It receives the ele
 ``` html
 <draggable v-model="myArray" tag="transition-group" item-key="id">
   <template #item="{element}">
-      <div> {{element.name}} </div>
+      <div>
+        <div> {{element.name}} </div>
+    	</div>
   </template>
 </draggable>
 ```
@@ -137,7 +128,7 @@ The `item` slot should be used to display items of the list. It receives the ele
 
 ```html
 <draggable v-model='myList'>
-``` 
+```
 
 ```javascript
 computed: {

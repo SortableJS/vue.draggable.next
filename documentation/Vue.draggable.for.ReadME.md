@@ -32,7 +32,7 @@ https://jsfiddle.net/dede89/u5ecgtsj/
 ## Installation
 - Available through:
 ``` js
- npm install vuedraggable
+ npm i zhyswan-vuedraggable
 ```
 ``` js
  Bower install vue.draggable
