@@ -13,8 +13,6 @@
 
 Vue component (Vue.js 3.0) allowing drag-and-drop and synchronization with view model array.
 
-For Vue 2 and Vue 1 version check: https://github.com/SortableJS/Vue.Draggable
-
 Based on and offering all features of [Sortable.js](https://github.com/RubaXa/Sortable)
 
 ## Demo
@@ -23,7 +21,7 @@ Based on and offering all features of [Sortable.js](https://github.com/RubaXa/So
 
 ## Live Demos
 
-https://sortablejs.github.io/vue.draggable.next/
+https://zhyswan.github.io/vue3.draggable/
 
 ## Features
 
