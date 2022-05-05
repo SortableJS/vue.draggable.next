@@ -94,9 +94,9 @@ The `item` slot should be used to display items of the list. It receives the ele
 ``` html
 <draggable v-model="myArray" tag="transition-group" item-key="id">
   <template #item="{element}">
-      <div>
-        <div> {{element.name}} </div>
-    	</div>
+    <div>
+      <div> {{element.name}} </div>
+    </div>
   </template>
 </draggable>
 ```
