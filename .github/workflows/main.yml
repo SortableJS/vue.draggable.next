@@ -41,16 +41,6 @@ jobs:
         run: |
           npm run build
       # 执行部署
-      - name: 部署
-        # 这个 action 会根据配置自动推送代码到指定分支
-        # uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          # 指定密钥，即在第一步中设置的
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          # 指定推送到的远程分支
-          BRANCH: master
-          # 指定构建之后的产物要推送哪个目录的代码
-          FOLDER: dist
       - run: npm publish
         env:
           # 刚刚设置的 NPM_TOKEN
