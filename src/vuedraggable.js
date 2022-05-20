@@ -78,6 +78,8 @@ const draggableComponent = defineComponent({
   name: "draggable",
 
   inheritAttrs: false,
+  
+  compatConfig: { MODE: 3 },
 
   props,
 
