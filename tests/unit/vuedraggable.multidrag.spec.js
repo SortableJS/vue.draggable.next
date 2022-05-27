@@ -113,8 +113,8 @@ describe("draggable.vue with multidrag plugin", () => {
 
     it('should be selected', async () => {
       const wrapperItems = wrapper.findAll('[data-draggable]');
-      const item1 = wrapperItems.at(0);
-      const item2 = wrapperItems.at(wrapperItems.length - 1);
+      const item1 = wrapperItems[0];
+      const item2 = wrapperItems[wrapperItems.length - 1];
 
       expect(item1.element.matches('.selected')).toBe(false);
       expect(item2.element.matches('.selected')).toBe(false);
@@ -142,8 +142,8 @@ describe("draggable.vue with multidrag plugin", () => {
 
     it('should be deselected', async () => {
       const wrapperItems = wrapper.findAll('[data-draggable]');
-      const item1 = wrapperItems.at(0);
-      const item2 = wrapperItems.at(wrapperItems.length - 1);
+      const item1 = wrapperItems[0];
+      const item2 = wrapperItems[wrapperItems.length - 1];
 
       // select items for deselect
       Sortable.utils.select(item1.element);
@@ -236,8 +236,8 @@ describe("draggable.vue with multidrag plugin", () => {
 
     describe('when drop first and second into last', () => {
       beforeEach(async () => {
-        item1 = wrapperItems.at(0);
-        item2 = wrapperItems.at(1);
+        item1 = wrapperItems[0];
+        item2 = wrapperItems[1];
 
         // start drag from first item
         const startEvent = {
@@ -258,12 +258,12 @@ describe("draggable.vue with multidrag plugin", () => {
           item: item1.element,
           items: [item1.element, item2.element],
           oldIndicies: [
-            { multiDragElement: item1.element, index: 0 },
-            { multiDragElement: item2.element, index: 1 },
+            { multiDragElement: item1.element, index: 1 },
+            { multiDragElement: item2.element, index: 2 },
           ],
           newIndicies: [
-            { multiDragElement: item1.element, index: 2 },
-            { multiDragElement: item2.element, index: 3 },
+            { multiDragElement: item1.element, index: 3 },
+            { multiDragElement: item2.element, index: 4 },
           ],
         };
         onUpdate(updateEvent);
@@ -291,8 +291,8 @@ describe("draggable.vue with multidrag plugin", () => {
 
     describe('when drop second and first into last', () => {
       beforeEach(async () => {
-        item1 = wrapperItems.at(0);
-        item2 = wrapperItems.at(1);
+        item1 = wrapperItems[0];
+        item2 = wrapperItems[1];
   
         // start drag from first item
         const startEvent = {
@@ -312,12 +312,12 @@ describe("draggable.vue with multidrag plugin", () => {
           item: item1.element,
           items: [item2.element, item1.element],
           oldIndicies: [
-            { multiDragElement: item2.element, index: 1 },
-            { multiDragElement: item1.element, index: 0 },
+            { multiDragElement: item2.element, index: 2 },
+            { multiDragElement: item1.element, index: 1 },
           ],
           newIndicies: [
-            { multiDragElement: item2.element, index: 3 },
-            { multiDragElement: item1.element, index: 2 },
+            { multiDragElement: item2.element, index: 4 },
+            { multiDragElement: item1.element, index: 3 },
           ],
         };
         onUpdate(updateEvent);
@@ -345,8 +345,8 @@ describe("draggable.vue with multidrag plugin", () => {
 
     describe('when drop second and last into first', () => {
       beforeEach(async () => {
-        item1 = wrapperItems.at(1);
-        item2 = wrapperItems.at(3);
+        item1 = wrapperItems[1];
+        item2 = wrapperItems[3];
   
         // start drag from second item
         const startEvent = {
@@ -367,12 +367,12 @@ describe("draggable.vue with multidrag plugin", () => {
           item: item1.element,
           items: [item2.element, item1.element],
           oldIndicies: [
-            { multiDragElement: item1.element, index: 1 },
-            { multiDragElement: item2.element, index: 3 },
+            { multiDragElement: item1.element, index: 2 },
+            { multiDragElement: item2.element, index: 4 },
           ],
           newIndicies: [
-            { multiDragElement: item1.element, index: 0 },
-            { multiDragElement: item2.element, index: 1 },
+            { multiDragElement: item1.element, index: 1 },
+            { multiDragElement: item2.element, index: 2 },
           ],
         };
         onUpdate(updateEvent);
@@ -486,8 +486,8 @@ describe("draggable.vue with multidrag plugin", () => {
 
     describe('when drop to other (remove)', () => {
       beforeEach(async () => {
-        item1 = wrapperItems.at(0);
-        item2 = wrapperItems.at(2);
+        item1 = wrapperItems[0];
+        item2 = wrapperItems[2];
   
         // start drag from first item
         const startEvent = {
@@ -507,8 +507,8 @@ describe("draggable.vue with multidrag plugin", () => {
           item: item1,
           items: [item1, item2],
           oldIndicies: [
-            { multiDragElement: item1.element, index: 0 },
-            { multiDragElement: item2.element, index: 2 },
+            { multiDragElement: item1.element, index: 1 },
+            { multiDragElement: item2.element, index: 3 },
           ],
         };
         onRemove(removeEvent);
