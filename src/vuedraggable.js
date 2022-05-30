@@ -238,6 +238,15 @@ const draggableComponent = defineComponent({
       this.alterList(spliceList);
     },
 
+    swapPosition(oldIndex, newIndex) {
+      const swapPosition = list => {
+        const temp = list[oldIndex];
+        list[oldIndex] = list[newIndex];
+        list[newIndex] = temp;
+      };
+      this.alterList(swapPosition);
+    },
+
     updatePosition(oldIndex, newIndex) {
       const updatePosition = list =>
         list.splice(newIndex, 0, list.splice(oldIndex, 1)[0]);
@@ -320,29 +329,32 @@ const draggableComponent = defineComponent({
     },
 
     onDragAddSingle(evt) {
+      const swapMode = this._sortable.options && this._sortable.options.swap;
       const element = evt.item._underlying_vm_;
       if (element === undefined) {
         return;
       }
+      const swapItem = swapMode ? evt.to.children[evt.newIndex] : null;
       removeNode(evt.item);
-      const newIndex = this.getVmIndexFromDomIndex(evt.newIndex);
+      let newIndex = this.getVmIndexFromDomIndex(evt.newIndex);
+      if (evt.swap) newIndex -= 1;
       // @ts-ignore
-      this.spliceList(newIndex, 0, element);
+      this.spliceList(newIndex, swapMode ? 1 : 0, element);
       const added = { element, newIndex };
       if (evt.swap) return;
       this.emitChanges({ added });
-      if (!this._sortable.options || !this._sortable.options.swap) return;
+      if (!swapMode) return;
       const swapEvt = {
         to: evt.from,
         from: evt.to,
-        item: evt.to.children[evt.newIndex],
-        oldIndex: evt.newIndex + 1,
+        item: swapItem,
+        oldIndex: evt.newIndex,
         newIndex: evt.oldIndex,
         swap: true
       };
       nextTick(() => {
         const context = swapEvt.to.__draggable_component__;
-        context.onDragStart(swapEvt)
+        context.onDragStart(swapEvt);
         context.onDragAdd(swapEvt);
       });
     },
@@ -387,31 +399,18 @@ const draggableComponent = defineComponent({
     },
 
     onDragRemoveSingle(evt) {
+      const { index: oldIndex, element } = this.context;
+      const removed = { element, oldIndex };
+      if (this._sortable.options && this._sortable.options.swap)
+        return this.emitChanges({ removed });
       insertNodeAt(this.$el, evt.item, evt.oldIndex);
       if (evt.pullMode === "clone") {
         removeNode(evt.clone);
         return;
       }
-      const { index: oldIndex, element } = this.context;
       // @ts-ignore
       this.spliceList(oldIndex, 1);
-      const removed = { element, oldIndex };
-      if (evt.swap) return;
       this.emitChanges({ removed });
-      if (!this._sortable.options || !this._sortable.options.swap) return;
-      const swapEvt = {
-        to: evt.from,
-        from: evt.to,
-        item: evt.from.children[evt.newIndex],
-        oldIndex: evt.newIndex + 1,
-        newIndex: evt.oldIndex,
-        swap: true
-      };
-      nextTick(() => {
-        const context = swapEvt.to.__draggable_component__;
-        context.onDragStart(swapEvt)
-        context.onDragRemove(swapEvt);
-      });
     },
 
     onDragUpdate(evt) {
@@ -460,23 +459,11 @@ const draggableComponent = defineComponent({
       insertNodeAt(evt.from, evt.item, evt.oldIndex);
       const oldIndex = this.context.index;
       const newIndex = this.getVmIndexFromDomIndex(evt.newIndex);
-      this.updatePosition(oldIndex, newIndex);
+      if (this._sortable.options && this._sortable.options.swap)
+        this.swapPosition(oldIndex, newIndex);
+      else this.updatePosition(oldIndex, newIndex);
       const moved = { element: this.context.element, oldIndex, newIndex };
-      if (evt.swap) return;
       this.emitChanges({ moved });
-      if (!this._sortable.options || !this._sortable.options.swap) return;
-      const swapEvt = {
-        from: evt.from,
-        item: evt.from.children[evt.newIndex],
-        oldIndex: evt.newIndex - 1,
-        newIndex: evt.oldIndex,
-        swap: true
-      };
-      nextTick(() => {
-        this.context = this.getUnderlyingVm(swapEvt.item);
-        swapEvt.item._underlying_vm_ = this.clone(this.context.element);
-        this.onDragUpdate(swapEvt);
-      });
     },
 
     computeFutureIndex(relatedContext, evt) {
