@@ -4820,7 +4820,13 @@ function createSortableInstance(rootContainer, options) {
   // - cjs ("sortable.js") and complete esm ("sortable.complete.esm") mount MultiDrag automatically.
   // - default esm ("sortable.esm") does not mount MultiDrag automatically.
 
-  if (options.multiDrag && !sortable.multiDrag) {
+  if (options.swap && !sortable.swap) {
+    // mount plugin if not mounted
+    external_commonjs_sortablejs_commonjs2_sortablejs_amd_sortablejs_root_Sortable_default.a.mount(new external_commonjs_sortablejs_commonjs2_sortablejs_amd_sortablejs_root_Sortable_["Swap"]()); // destroy and recreate sortable.js instance
+
+    sortable.destroy();
+    return createSortableInstance(rootContainer, options);
+  } else if (options.multiDrag && !sortable.multiDrag) {
     // mount plugin if not mounted
     external_commonjs_sortablejs_commonjs2_sortablejs_amd_sortablejs_root_Sortable_default.a.mount(new external_commonjs_sortablejs_commonjs2_sortablejs_amd_sortablejs_root_Sortable_["MultiDrag"]()); // destroy and recreate sortable.js instance
 
@@ -5284,6 +5290,8 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
       });
     },
     onDragUpdateSingle: function onDragUpdateSingle(evt) {
+      var _this9 = this;
+
       removeNode(evt.item);
       insertNodeAt(evt.from, evt.item, evt.oldIndex);
       var oldIndex = this.context.index;
@@ -5294,8 +5302,23 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
         oldIndex: oldIndex,
         newIndex: newIndex
       };
+      if (evt.swap) return;
       this.emitChanges({
         moved: moved
+      });
+      if (!this._sortable.swap) return;
+      var swapEvt = {
+        from: evt.from,
+        item: evt.from.children[evt.newIndex],
+        oldIndex: evt.newIndex - 1,
+        newIndex: evt.oldIndex,
+        swap: true
+      };
+      Object(external_commonjs_vue_commonjs2_vue_root_Vue_["nextTick"])(function () {
+        _this9.context = _this9.getUnderlyingVm(swapEvt.item);
+        swapEvt.item._underlying_vm_ = _this9.clone(_this9.context.element);
+
+        _this9.onDragUpdate(swapEvt);
       });
     },
     computeFutureIndex: function computeFutureIndex(relatedContext, evt) {
