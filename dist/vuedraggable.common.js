@@ -5042,6 +5042,15 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
 
       this.alterList(spliceList);
     },
+    swapPosition: function swapPosition(oldIndex, newIndex) {
+      var swapPosition = function swapPosition(list) {
+        var temp = list[oldIndex];
+        list[oldIndex] = list[newIndex];
+        list[newIndex] = temp;
+      };
+
+      this.alterList(swapPosition);
+    },
     updatePosition: function updatePosition(oldIndex, newIndex) {
       var updatePosition = function updatePosition(list) {
         return list.splice(newIndex, 0, list.splice(oldIndex, 1)[0]);
@@ -5143,16 +5152,19 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
       });
     },
     onDragAddSingle: function onDragAddSingle(evt) {
+      var swapMode = this._sortable.options && this._sortable.options.swap;
       var element = evt.item._underlying_vm_;
 
       if (element === undefined) {
         return;
       }
 
+      var swapItem = swapMode ? evt.from.children[evt.oldIndex] : null;
       removeNode(evt.item);
-      var newIndex = this.getVmIndexFromDomIndex(evt.newIndex); // @ts-ignore
+      var newIndex = this.getVmIndexFromDomIndex(evt.newIndex);
+      if (swapMode) newIndex = newIndex === 0 ? 0 : newIndex - 1; // @ts-ignore
 
-      this.spliceList(newIndex, 0, element);
+      this.spliceList(newIndex, swapMode ? 1 : 0, element);
       var added = {
         element: element,
         newIndex: newIndex
@@ -5161,12 +5173,12 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
       this.emitChanges({
         added: added
       });
-      if (!this._sortable.options || !this._sortable.options.swap) return;
+      if (!swapMode) return;
       var swapEvt = {
         to: evt.from,
         from: evt.to,
-        item: evt.to.children[evt.newIndex],
-        oldIndex: evt.newIndex + 1,
+        item: swapItem,
+        oldIndex: evt.newIndex,
         newIndex: evt.oldIndex,
         swap: true
       };
@@ -5231,39 +5243,27 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
       });
     },
     onDragRemoveSingle: function onDragRemoveSingle(evt) {
+      var _this$context = this.context,
+          oldIndex = _this$context.index,
+          element = _this$context.element;
+      var removed = {
+        element: element,
+        oldIndex: oldIndex
+      };
+      if (this._sortable.options && this._sortable.options.swap) return this.emitChanges({
+        removed: removed
+      });
       insertNodeAt(this.$el, evt.item, evt.oldIndex);
 
       if (evt.pullMode === "clone") {
         removeNode(evt.clone);
         return;
-      }
+      } // @ts-ignore
 
-      var _this$context = this.context,
-          oldIndex = _this$context.index,
-          element = _this$context.element; // @ts-ignore
 
       this.spliceList(oldIndex, 1);
-      var removed = {
-        element: element,
-        oldIndex: oldIndex
-      };
-      if (evt.swap) return;
       this.emitChanges({
         removed: removed
-      });
-      if (!this._sortable.options || !this._sortable.options.swap) return;
-      var swapEvt = {
-        to: evt.from,
-        from: evt.to,
-        item: evt.from.children[evt.newIndex],
-        oldIndex: evt.newIndex + 1,
-        newIndex: evt.oldIndex,
-        swap: true
-      };
-      Object(external_commonjs_vue_commonjs2_vue_root_Vue_["nextTick"])(function () {
-        var context = swapEvt.to.__draggable_component__;
-        context.onDragStart(swapEvt);
-        context.onDragRemove(swapEvt);
       });
     },
     onDragUpdate: function onDragUpdate(evt) {
@@ -5320,35 +5320,26 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
       });
     },
     onDragUpdateSingle: function onDragUpdateSingle(evt) {
-      var _this9 = this;
-
+      var swapMode = this._sortable.options && this._sortable.options.swap;
+      var swapItem = swapMode ? evt.from.children[evt.oldIndex] : null;
       removeNode(evt.item);
       insertNodeAt(evt.from, evt.item, evt.oldIndex);
+
+      if (swapMode) {
+        removeNode(swapItem);
+        insertNodeAt(evt.from, swapItem, evt.newIndex);
+      }
+
       var oldIndex = this.context.index;
       var newIndex = this.getVmIndexFromDomIndex(evt.newIndex);
-      this.updatePosition(oldIndex, newIndex);
+      if (swapMode) this.swapPosition(oldIndex, newIndex);else this.updatePosition(oldIndex, newIndex);
       var moved = {
         element: this.context.element,
         oldIndex: oldIndex,
         newIndex: newIndex
       };
-      if (evt.swap) return;
       this.emitChanges({
         moved: moved
-      });
-      if (!this._sortable.options || !this._sortable.options.swap) return;
-      var swapEvt = {
-        from: evt.from,
-        item: evt.from.children[evt.newIndex],
-        oldIndex: evt.newIndex - 1,
-        newIndex: evt.oldIndex,
-        swap: true
-      };
-      Object(external_commonjs_vue_commonjs2_vue_root_Vue_["nextTick"])(function () {
-        _this9.context = _this9.getUnderlyingVm(swapEvt.item);
-        swapEvt.item._underlying_vm_ = _this9.clone(_this9.context.element);
-
-        _this9.onDragUpdate(swapEvt);
       });
     },
     computeFutureIndex: function computeFutureIndex(relatedContext, evt) {
