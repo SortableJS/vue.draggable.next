@@ -1,4 +1,4 @@
-import Sortable, { MultiDrag } from "sortablejs";
+import Sortable, { MultiDrag, Swap } from "sortablejs";
 import { insertNodeAt, removeNode } from "./util/htmlHelper";
 import { console } from "./util/console";
 import {
@@ -35,7 +35,13 @@ function createSortableInstance(rootContainer, options) {
   // check multidrag plugin loaded
   // - cjs ("sortable.js") and complete esm ("sortable.complete.esm") mount MultiDrag automatically.
   // - default esm ("sortable.esm") does not mount MultiDrag automatically.
-  if (options.multiDrag && !sortable.multiDrag) {
+  if (options.swap && !sortable.swap) {
+    // mount plugin if not mounted
+    Sortable.mount(new Swap());
+    // destroy and recreate sortable.js instance
+    sortable.destroy();
+    return createSortableInstance(rootContainer, options);
+  } else if (options.multiDrag && !sortable.multiDrag) {
     // mount plugin if not mounted
     Sortable.mount(new MultiDrag());
     // destroy and recreate sortable.js instance
@@ -426,7 +432,21 @@ const draggableComponent = defineComponent({
       const newIndex = this.getVmIndexFromDomIndex(evt.newIndex);
       this.updatePosition(oldIndex, newIndex);
       const moved = { element: this.context.element, oldIndex, newIndex };
+      if (evt.swap) return;
       this.emitChanges({ moved });
+      if (!this._sortable.swap) return;
+      const swapEvt = {
+        from: evt.from,
+        item: evt.from.children[evt.newIndex],
+        oldIndex: evt.newIndex - 1,
+        newIndex: evt.oldIndex,
+        swap: true
+      };
+      nextTick(() => {
+        this.context = this.getUnderlyingVm(swapEvt.item);
+        swapEvt.item._underlying_vm_ = this.clone(this.context.element);
+        this.onDragUpdate(swapEvt);
+      });
     },
 
     computeFutureIndex(relatedContext, evt) {
