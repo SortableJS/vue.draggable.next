@@ -94,7 +94,9 @@ describe("draggable.vue with swap plugin", () => {
           onStart(startEvent);
           await nextTick();
 
-          // console.log(Array.from(vm.targetDomElement.children))
+          const temp = vm.targetDomElement.children[0]
+          vm.targetDomElement.replaceChild(vm.targetDomElement.children[2], vm.targetDomElement.children[0])
+          vm.targetDomElement.replaceChild(temp, vm.targetDomElement.children[2])
           // drop to last item
           const updateEvent = {
             from: wrapper.element,
@@ -131,7 +133,9 @@ describe("draggable.vue with swap plugin", () => {
           onStart(startEvent);
           await nextTick();
 
-          // console.log(Array.from(vm.targetDomElement.children))
+          const temp = vm.targetDomElement.children[0]
+          vm.targetDomElement.replaceChild(vm.targetDomElement.children[3], vm.targetDomElement.children[0])
+          vm.targetDomElement.appendChild(temp)
           // drop to last item
           const updateEvent = {
             from: wrapper.element,
@@ -191,6 +195,9 @@ describe("draggable.vue with swap plugin", () => {
           await nextTick();
 
           // console.log(Array.from(vm.targetDomElement.children))
+          const temp = vm.targetDomElement.children[1]
+          vm.targetDomElement.replaceChild(vm.targetDomElement.children[3], vm.targetDomElement.children[1])
+          vm.targetDomElement.replaceChild(temp, vm.targetDomElement.children[3])
           // drop to last item
           const updateEvent = {
             from: wrapper.element,
@@ -228,6 +235,9 @@ describe("draggable.vue with swap plugin", () => {
           await nextTick();
 
           // console.log(Array.from(vm.targetDomElement.children))
+          const temp = vm.targetDomElement.children[1]
+          vm.targetDomElement.replaceChild(vm.targetDomElement.children[4], vm.targetDomElement.children[1])
+          vm.targetDomElement.appendChild(temp)
           // drop to last item
           const updateEvent = {
             from: wrapper.element,
@@ -290,6 +300,9 @@ describe("draggable.vue with swap plugin", () => {
           await nextTick();
 
           // console.log(Array.from(vm.targetDomElement.children))
+          const temp = vm.targetDomElement.children[0]
+          vm.targetDomElement.replaceChild(vm.targetDomElement.children[2], vm.targetDomElement.children[0])
+          vm.targetDomElement.replaceChild(temp, vm.targetDomElement.children[2])
           // drop to last item
           const updateEvent = {
             from: wrapper.element,
@@ -327,6 +340,9 @@ describe("draggable.vue with swap plugin", () => {
           await nextTick();
 
           // console.log(Array.from(vm.targetDomElement.children))
+          const temp = vm.targetDomElement.children[0]
+          vm.targetDomElement.replaceChild(vm.targetDomElement.children[3], vm.targetDomElement.children[0])
+          vm.targetDomElement.appendChild(temp)
           // drop to last item
           const updateEvent = {
             from: wrapper.element,
@@ -389,6 +405,9 @@ describe("draggable.vue with swap plugin", () => {
           group1.onStart(startEvent);
           await nextTick();
 
+          const temp = group2.vm.targetDomElement.children[0]
+          group2.vm.targetDomElement.replaceChild(group1.vm.targetDomElement.children[0], group2.vm.targetDomElement.children[0])
+          group1.vm.targetDomElement.insertBefore(temp, group1.vm.targetDomElement.children[0])
           const addEvent = {
             from: group1.wrapper.element,
             to: group2.wrapper.element,
@@ -483,6 +502,9 @@ describe("draggable.vue with swap plugin", () => {
           group1.onStart(startEvent);
           await nextTick();
 
+          const temp = group2.vm.targetDomElement.children[0]
+          group2.vm.targetDomElement.replaceChild(group1.vm.targetDomElement.children[0], group2.vm.targetDomElement.children[0])
+          group1.vm.targetDomElement.insertBefore(temp, group1.vm.targetDomElement.children[0])
           const addEvent = {
             from: group1.wrapper.element,
             to: group2.wrapper.element,

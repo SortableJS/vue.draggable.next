@@ -334,10 +334,10 @@ const draggableComponent = defineComponent({
       if (element === undefined) {
         return;
       }
-      const swapItem = swapMode ? evt.to.children[evt.newIndex] : null;
+      const swapItem = swapMode ? evt.from.children[evt.oldIndex] : null;
       removeNode(evt.item);
       let newIndex = this.getVmIndexFromDomIndex(evt.newIndex);
-      if (evt.swap) newIndex -= 1;
+      if (swapMode) newIndex = newIndex === 0 ? 0 : newIndex - 1;
       // @ts-ignore
       this.spliceList(newIndex, swapMode ? 1 : 0, element);
       const added = { element, newIndex };
