@@ -329,7 +329,22 @@ const draggableComponent = defineComponent({
       // @ts-ignore
       this.spliceList(newIndex, 0, element);
       const added = { element, newIndex };
+      if (evt.swap) return;
       this.emitChanges({ added });
+      if (!this._sortable.options || !this._sortable.options.swap) return;
+      const swapEvt = {
+        to: evt.from,
+        from: evt.to,
+        item: evt.to.children[evt.newIndex],
+        oldIndex: evt.newIndex + 1,
+        newIndex: evt.oldIndex,
+        swap: true
+      };
+      nextTick(() => {
+        const context = swapEvt.to.__draggable_component__;
+        context.onDragStart(swapEvt)
+        context.onDragAdd(swapEvt);
+      });
     },
 
     onDragRemove(evt) {
@@ -381,7 +396,22 @@ const draggableComponent = defineComponent({
       // @ts-ignore
       this.spliceList(oldIndex, 1);
       const removed = { element, oldIndex };
+      if (evt.swap) return;
       this.emitChanges({ removed });
+      if (!this._sortable.options || !this._sortable.options.swap) return;
+      const swapEvt = {
+        to: evt.from,
+        from: evt.to,
+        item: evt.from.children[evt.newIndex],
+        oldIndex: evt.newIndex + 1,
+        newIndex: evt.oldIndex,
+        swap: true
+      };
+      nextTick(() => {
+        const context = swapEvt.to.__draggable_component__;
+        context.onDragStart(swapEvt)
+        context.onDragRemove(swapEvt);
+      });
     },
 
     onDragUpdate(evt) {
@@ -434,7 +464,7 @@ const draggableComponent = defineComponent({
       const moved = { element: this.context.element, oldIndex, newIndex };
       if (evt.swap) return;
       this.emitChanges({ moved });
-      if (!this._sortable.swap) return;
+      if (!this._sortable.options || !this._sortable.options.swap) return;
       const swapEvt = {
         from: evt.from,
         item: evt.from.children[evt.newIndex],

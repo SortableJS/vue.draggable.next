@@ -5157,8 +5157,23 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
         element: element,
         newIndex: newIndex
       };
+      if (evt.swap) return;
       this.emitChanges({
         added: added
+      });
+      if (!this._sortable.options || !this._sortable.options.swap) return;
+      var swapEvt = {
+        to: evt.from,
+        from: evt.to,
+        item: evt.to.children[evt.newIndex],
+        oldIndex: evt.newIndex + 1,
+        newIndex: evt.oldIndex,
+        swap: true
+      };
+      Object(external_commonjs_vue_commonjs2_vue_root_Vue_["nextTick"])(function () {
+        var context = swapEvt.to.__draggable_component__;
+        context.onDragStart(swapEvt);
+        context.onDragAdd(swapEvt);
       });
     },
     onDragRemove: function onDragRemove(evt) {
@@ -5232,8 +5247,23 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
         element: element,
         oldIndex: oldIndex
       };
+      if (evt.swap) return;
       this.emitChanges({
         removed: removed
+      });
+      if (!this._sortable.options || !this._sortable.options.swap) return;
+      var swapEvt = {
+        to: evt.from,
+        from: evt.to,
+        item: evt.from.children[evt.newIndex],
+        oldIndex: evt.newIndex + 1,
+        newIndex: evt.oldIndex,
+        swap: true
+      };
+      Object(external_commonjs_vue_commonjs2_vue_root_Vue_["nextTick"])(function () {
+        var context = swapEvt.to.__draggable_component__;
+        context.onDragStart(swapEvt);
+        context.onDragRemove(swapEvt);
       });
     },
     onDragUpdate: function onDragUpdate(evt) {
@@ -5306,7 +5336,7 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
       this.emitChanges({
         moved: moved
       });
-      if (!this._sortable.swap) return;
+      if (!this._sortable.options || !this._sortable.options.swap) return;
       var swapEvt = {
         from: evt.from,
         item: evt.from.children[evt.newIndex],
