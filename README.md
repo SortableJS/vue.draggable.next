@@ -110,6 +110,7 @@ The `item` slot should be used to display items of the list. It receives the ele
 </draggable>
 ```
 
+
 ### With footer slot:
 ``` html
 <draggable v-model="myArray" item-key="id">
@@ -196,6 +197,33 @@ to
   </template>
 </draggable>
 ```
+
+Breaking changes/More complex example:
+  4) When using nested elements or you want to use another name than `element` inside, destructuring is required
+
+From:
+``` html
+<!-- vue 2 version -->
+<draggable v-model="myNestedObject">
+  <div v-for="(item, id) in myNestedObject" :key="item.id">{{id}} - {{item.name}}</div>
+  <draggable v-model="myNestedObject.nested">
+    <div v-for="myVarName in myNestedObject" :key="myVarName.uuid">{{item.name}}: {{myVarName.name}}</div>
+  </draggable>
+</draggable>
+```
+To:
+``` html
+<draggable v-model="myArray" item-key="id">
+  <template #item="{element: item, index:id}">
+    <div>{{id}} - {{item.name}}</div>
+    <draggable v-model="myNestedObject.nested" item-key="uuid">
+      <template #item="{element: myVarName}">
+        <div>{{item.name}}: {{myVarName.name}}</div>
+      </template>
+    </draggable>
+  </template>
+</draggable>
+
 
 ### Props
 #### modelValue
