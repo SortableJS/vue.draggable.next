@@ -17,7 +17,7 @@ function computeNodes({ $slots, realList, getKey }) {
     throw new Error("draggable element must have an item slot");
   }
   const defaultNodes = normalizedList.flatMap((element, index) =>
-    item({ element, index }).map(node => {
+    item({ element, index }).filter((node) => String(node.type) !== "Symbol(Comment)").map(node => {
       node.key = getKey(element);
       node.props = { ...(node.props || {}), "data-draggable": true };
       return node;
