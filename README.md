@@ -297,7 +297,6 @@ checkMove: function(evt){
     return (evt.draggedContext.element.name!=='apple');
 }
 ```
-See complete example: [Cancel.html](https://github.com/SortableJS/Vue.Draggable/blob/master/examples/Cancel.html), [cancel.js](https://github.com/SortableJS/Vue.Draggable/blob/master/examples/script/cancel.js)
 
 #### componentData
 Type: `Object`<br>
