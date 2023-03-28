@@ -65,6 +65,10 @@ const props = {
     type: Object,
     required: false,
     default: null
+  },
+  beforeAdded: {
+    type: Function,
+    default: null
   }
 };
 
@@ -238,12 +242,21 @@ const draggableComponent = defineComponent({
     },
 
     onDragAdd(evt) {
-      const element = evt.item._underlying_vm_;
+      let element = evt.item._underlying_vm_;
       if (element === undefined) {
         return;
       }
       removeNode(evt.item);
       const newIndex = this.getVmIndexFromDomIndex(evt.newIndex);
+
+      // handle element before add
+      if (this.beforeAdded) {
+        const newElement = this.beforeAdded(element);
+        if (newElement !== undefined) {
+          element = newElement;
+        }
+      }
+
       // @ts-ignore
       this.spliceList(newIndex, 0, element);
       const added = { element, newIndex };
