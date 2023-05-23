@@ -35,4 +35,7 @@ export default {
   min-height: 50px;
   outline: 1px dashed;
 }
+li {
+  margin-left: 1em;
+}
 </style>
