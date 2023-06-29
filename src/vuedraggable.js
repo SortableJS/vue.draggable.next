@@ -57,6 +57,10 @@ const props = {
     type: String,
     default: "div"
   },
+  handle: {
+    type: String,
+    default: ""
+  },
   move: {
     type: Function,
     default: null
