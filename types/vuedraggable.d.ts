@@ -26,6 +26,10 @@ declare const draggableComponent: import("vue").DefineComponent<{
         type: FunctionConstructor;
         default: any;
     };
+    handle: {
+        type: StringConstructor;
+        default: string;
+    };
     componentData: {
         type: ObjectConstructor;
         required: boolean;

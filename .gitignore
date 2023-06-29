@@ -12,3 +12,4 @@ test/tmp
 /coverage
 
 .env.local
+.idea
