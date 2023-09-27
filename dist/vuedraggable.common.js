@@ -5219,7 +5219,9 @@ var draggableComponent = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["d
       }); // if clone
 
       if (evt.pullMode === "clone") {
-        removeNode(evt.clone);
+        evt.clones.forEach(function (element) {
+          removeNode(element);
+        });
         return;
       } // remove items and reset transition data
       // - "order by index desc" (call reverse()) for prevent Array.splice side effect
