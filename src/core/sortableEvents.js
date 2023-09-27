@@ -1,5 +1,13 @@
 const manageAndEmit = ["Start", "Add", "Remove", "Update", "End"];
-const emit = ["Choose", "Unchoose", "Sort", "Filter", "Clone"];
+const emit = [
+  "Choose",
+  "Unchoose",
+  "Sort",
+  "Filter",
+  "Clone",
+  "Select",
+  "Deselect"
+];
 const manage = ["Move"];
 const eventHandlerNames = [manage, manageAndEmit, emit]
   .flatMap(events => events)

@@ -71,28 +71,28 @@ describe("getComponentAttributes", () => {
 
 describe("createSortableOption", () => {
   test.each([
-    [{ $attrs: {}, callBackBuilder: {} }, { draggable: "[data-draggable]" }],
+    [{ $attrs: {}, callBackBuilder: {} }, { draggable: ">[data-draggable]" }],
     [
       { $attrs: { onStart: 23 }, callBackBuilder: {} },
-      { draggable: "[data-draggable]" }
+      { draggable: ">[data-draggable]" }
     ],
     [
       { $attrs: { onEnd: 23 }, callBackBuilder: {} },
-      { draggable: "[data-draggable]" }
+      { draggable: ">[data-draggable]" }
     ],
     [
       {
         $attrs: { id: "id", class: "class", "data-app": "app" },
         callBackBuilder: {}
       },
-      { draggable: "[data-draggable]" }
+      { draggable: ">[data-draggable]" }
     ],
     [
       {
         $attrs: { value: "43" },
         callBackBuilder: {}
       },
-      { value: "43", draggable: "[data-draggable]" }
+      { value: "43", draggable: ">[data-draggable]" }
     ],
     [
       {
@@ -106,7 +106,7 @@ describe("createSortableOption", () => {
       {
         value: "43",
         ghostClass: "phantom",
-        draggable: "[data-draggable].draggable"
+        draggable: ">[data-draggable].draggable"
       }
     ],
     [
@@ -121,10 +121,12 @@ describe("createSortableOption", () => {
       },
       {
         value: "7",
-        draggable: "[data-draggable].draggable",
+        draggable: ">[data-draggable].draggable",
         onChoose: "Choose",
         onClone: "Clone",
+        onDeselect: "Deselect",
         onFilter: "Filter",
+        onSelect: "Select",
         onSort: "Sort",
         onUnchoose: "Unchoose"
       }
@@ -142,10 +144,12 @@ describe("createSortableOption", () => {
       },
       {
         property: "property",
-        draggable: "[data-draggable]",
+        draggable: ">[data-draggable]",
         onChoose: "emit-Choose",
         onClone: "emit-Clone",
+        onDeselect: "emit-Deselect",
         onFilter: "emit-Filter",
+        onSelect: "emit-Select",
         onSort: "emit-Sort",
         onUnchoose: "emit-Unchoose",
         onMove: "manage-Move",

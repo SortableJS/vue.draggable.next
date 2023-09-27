@@ -337,7 +337,7 @@ describe("draggable.vue when initialized with list", () => {
     const parameters = Sortable.mock.calls[0];
     expect(parameters[0]).toBe(element);
     expect(parameters[1]).toMatchObject({
-      draggable: "[data-draggable]",
+      draggable: ">[data-draggable]",
       sortableOption: "value",
       toBeCamelized: true
     });
@@ -366,7 +366,7 @@ describe("draggable.vue when initialized with list", () => {
     const parameters = Sortable.mock.calls[0];
     expect(parameters[0]).toBe(element);
     expect(parameters[1]).toMatchObject({
-      draggable: "[data-draggable]",
+      draggable: ">[data-draggable]",
       sortableOption: "value",
       toBeCamelized: true
     });
