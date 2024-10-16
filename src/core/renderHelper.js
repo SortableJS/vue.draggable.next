@@ -18,7 +18,7 @@ function computeNodes({ $slots, realList, getKey }) {
   }
   const defaultNodes = normalizedList.flatMap((element, index) =>
     item({ element, index }).map(node => {
-      node.key = getKey(element);
+      node.key = getKey(element, index);
       node.props = { ...(node.props || {}), "data-draggable": true };
       return node;
     })
